@@ -1,0 +1,38 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="YelpController" >
+    <aura:attribute name="search" type="String"/>
+    <aura:attribute name="mapMarkers" type="Object"/>
+    <aura:attribute name="markersTitle" type="String" />
+    <aura:attribute name="recordId" type="String"/>
+	<aura:attribute name="contact" type="Contact" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+   <lightning:layout>
+        <lightning:layoutItem padding="around-small" size="10">
+        <lightning:recordEditForm aura:id="recordViewForm"
+                                  recordId="{!v.recordId}"
+                                  recordTypeId="{!v.contact}"
+                                  objectApiName="Contact"
+                                  onsuccess="{!c.onSuccess}">
+            <lightning:messages />
+            <lightning:inputField fieldName="Meeting_Location__c" />
+            <lightning:inputField fieldName="Meeting_Date_Time__c" />
+            <lightning:button aura:id="submit" type="submit" label="Schedule" class="slds-m-top_small" />
+        </lightning:recordEditForm>
+       </lightning:layoutItem></lightning:layout>
+    <lightning:layout class="slds-grid_vertical-align-end">
+        <lightning:layoutItem padding="around-small" >
+            <lightning:input aura:id="businessSearch" label="Search Location"
+                             name="searchInput"
+                             type="search"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem  padding="around-small">
+        <lightning:button label="Search" onclick="{!c.handleClick}"/>
+        </lightning:layoutItem>
+        </lightning:layout>
+    <lightning:layout>
+        <lightning:layoutItem padding="around-small">
+            <lightning:map 
+                           mapMarkers="{! v.mapMarkers }"
+                           markersTitle="{!v.markersTitle}" />
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
